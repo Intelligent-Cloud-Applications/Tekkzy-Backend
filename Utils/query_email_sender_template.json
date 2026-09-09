@@ -1,0 +1,9 @@
+{
+    "Template": {
+      "TemplateName": "queryEmailSenderTemplate",
+      "SubjectPart": "We have received your Web Request",
+      "HtmlPart": "<h1>Hi {{fullName}},</h1><p>We have received your Web Request. Your queryId is {{serialNo}}. Here is a copy of your message:</p><ul><li>Name - {{fullName}}</li><li>Company - {{companyName}}</li><li>Email - {{emailId}}</li><li>Phone Number - {{phoneNumber}}</li><li>Contact - {{address}}</li><li>Message - {{projectDetails}}</li></ul><p>Regards,<br />Team AWSAIAPP</p>",
+      "TextPart": "Hi {{fullName}},\n\nWe have received your Web Request. Your queryId is {{serialNo}}. Here is a copy of your message:\nName - {{fullName}}\nCompany - {{companyName}}\nEmail - {{emailId}}\nPhone Number - {{phoneNumber}}\nAddress - {{address}}\nMessage - {{projectDetails}}\n\nRegards,\nTeam AWSAIAPP"
+    }
+  }
+  

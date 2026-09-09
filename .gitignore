@@ -1,0 +1,11 @@
+node_modules/
+.serverless/
+.esbuild/
+.env
+.env.local
+.env.prod
+.env.*.local
+*.log
+.DS_Store
+coverage/
+dist/

@@ -1,0 +1,9 @@
+{
+    "Template": {
+      "TemplateName": "queryEmailAdminTemplate",
+      "SubjectPart": "New message from AWSAIAPP Website",
+      "HtmlPart": "<h1>Hi Admin,</h1><p>You have a new message from AWSAIAPP website,</p><ul><li>Name - {{fullName}}</li><li>Company - {{companyName}}</li><li>Email - {{emailId}}</li><li>Phone Number - {{phoneNumber}}</li><li>Contact - {{address}}</li><li>Message - {{projectDetails}}</li></ul><p>Regards,<br />Team AWSAIAPP</p>",
+      "TextPart": "Hi Admin,\n\nYou have a new Web Request.\nName - {{fullName}}\nCompany - {{companyName}}\nEmail - {{emailId}}\nPhone Number - {{phoneNumber}}\nAddress - {{address}}\nMessage - {{projectDetails}}\n\nRegards,\nTeam AWSAIAPP"
+    }
+  }
+  

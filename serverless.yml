@@ -1,0 +1,516 @@
+service: tekkzy-backend-dev
+frameworkVersion: "3"
+
+useDotenv: true
+
+plugins:
+  - serverless-esbuild
+  - serverless-dotenv-plugin
+  - serverless-plugin-common-excludes
+  - serverless-plugin-include-dependencies
+  - serverless-plugin-split-stacks
+
+package:
+  excludeDevDependencies: false
+  individually: true
+  exclude:
+    - node_modules/**
+    - .git/**
+    - .gitignore
+    - README.md
+    - docs/**
+
+custom:
+  dotenv:
+    path: ${env:SLS_DOTENV_PATH, '.env'}
+  esbuild:
+    packager: "yarn"
+    concurrency: 4
+    zipConcurrency: 1
+    bundle: true
+    minify: false
+    sourcemap: true
+    target: node20
+    platform: node
+    external:
+      - "@aws-sdk/client-route-53-domains"
+  splitStacks:
+    perFunction: false
+    perType: false
+    perGroupFunction: true
+    nestedStackCount: 10
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: ${opt:region, 'us-east-2'}
+  stage: ${opt:stage, 'dev'}
+  memorySize: 512
+  timeout: 29
+  deploymentBucket:
+    name: ${env:SERVERLESS_DEPLOYMENT_BUCKET, 'tekkzy-backend-dev'}
+  environment:
+    STAGE: ${self:provider.stage}
+    DATA_AWS_REGION: ${env:DATA_AWS_REGION, self:provider.region}
+    COGNITO_REGION: ${env:COGNITO_REGION, env:DATA_AWS_REGION, self:provider.region}
+    RAZORPAY_TEST_KEY_ID: ${env:RAZORPAY_TEST_KEY_ID}
+    RAZORPAY_TEST_SECRET_KEY: ${env:RAZORPAY_TEST_SECRET_KEY}
+    RAZORPAY_WEBHOOK_SECRET: ${env:RAZORPAY_WEBHOOK_SECRET, env:RAZORPAY_TEST_SECRET_KEY}
+    RAZORPAY_PLAN_ID_MONTHLY: ${env:RAZORPAY_PLAN_ID_MONTHLY, ''}
+    RAZORPAY_PLAN_ID_YEARLY: ${env:RAZORPAY_PLAN_ID_YEARLY, ''}
+    TEKKZY_DOMAIN_GRACE_DAYS: ${env:TEKKZY_DOMAIN_GRACE_DAYS, '7'}
+    DOMAIN_MARKUP_USD: ${env:DOMAIN_MARKUP_USD, '5'}
+    USD_TO_INR_RATE: ${env:USD_TO_INR_RATE, '86'}
+    PROFILE_TABLE_NAME: ${env:PROFILE_TABLE_NAME}
+    PAYMENT_TABLE_NAME: ${env:PAYMENT_TABLE_NAME}
+    BETA_TEMPLATE_TABLE: ${env:BETA_TEMPLATE_TABLE}
+    SITE_TABLE: ${env:SITE_TABLE}
+    HOSTED_ZONE_ID: ${env:HOSTED_ZONE_ID}
+    SITE_DEPLOY_BUCKET: ${env:SITE_DEPLOY_BUCKET}
+    TEMPLATE_ASSETS_BUCKET: ${env:TEMPLATE_ASSETS_BUCKET, 'institution-utils'}
+    TEMPLATE_ASSETS_BUCKET_REGION: ${env:TEMPLATE_ASSETS_BUCKET_REGION, 'us-east-1'}
+    COGNITO_USER_POOL_ID: ${env:COGNITO_USER_POOL_ID}
+    COGNITO_CLIENT_ID: ${env:COGNITO_CLIENT_ID}
+    COGNITO_IDENTITY_POOL_ID: ${env:COGNITO_IDENTITY_POOL_ID}
+    PAYPAL_CLIENT_ID: ${env:PAYPAL_CLIENT_ID, ''}
+    PAYPAL_SECRET: ${env:PAYPAL_SECRET, ''}
+    AWSAIAPP_PAYPAL_CLIENT_ID: ${env:AWSAIAPP_PAYPAL_CLIENT_ID, ''}
+    AWSAIAPP_PAYPAL_SECRET: ${env:AWSAIAPP_PAYPAL_SECRET, ''}
+    SES_FROM_EMAIL: ${env:SES_FROM_EMAIL, 'saibedamatta@happyprancer.com'}
+    QUERY_TO_EMAIL: ${env:QUERY_TO_EMAIL, 'saibedamatta@happyprancer.com'}
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - s3:*
+            - ses:*
+            - sns:*
+          Resource: "*"
+        - Effect: Allow
+          Action:
+            - dynamodb:*
+            - cognito-idp:*
+            - cognito-identity:*
+          Resource: "*"
+        - Effect: Allow
+          Action:
+            - route53:*
+            - route53domains:*
+          Resource: "*"
+        - Effect: Allow
+          Action:
+            - cloudfront:*
+          Resource: "*"
+        - Effect: Allow
+          Action:
+            - acm:*
+          Resource: "*"
+
+functions:
+  getProfile:
+    handler: functions/tekkzy/get-profile.main
+    events:
+      - http:
+          path: /get-profile
+          method: GET
+          cors:
+            origin: "*"
+          authorizer: aws_iam
+
+  createProfile:
+    handler: functions/tekkzy/create-profile.main
+    events:
+      - http:
+          path: /create-profile
+          method: POST
+          cors:
+            origin: "*"
+          authorizer: aws_iam
+
+  updateProfile:
+    handler: functions/tekkzy/update-profile.main
+    events:
+      - http:
+          path: /update-profile
+          method: PUT
+          cors:
+            origin: "*"
+          authorizer: aws_iam
+
+  listTemplates:
+    handler: functions/tekkzy/list-template.main
+    events:
+      - http:
+          path: /list-templates
+          method: GET
+          cors:
+            origin: "*"
+
+  updateTemplate:
+    handler: functions/tekkzy/update-template.main
+    events:
+      - http:
+          path: /tekkzy/update-template
+          method: PUT
+          cors:
+            origin: "*"
+          authorizer: aws_iam
+
+  deleteTemplate:
+    handler: functions/tekkzy/delete-template.main
+    events:
+      - http:
+          path: /tekkzy/delete-template
+          method: POST
+          cors:
+            origin: "*"
+          authorizer: aws_iam
+
+  uploadTemplate:
+    handler: functions/tekkzy/upload-template.main
+    events:
+      - http:
+          path: /tekkzy/upload-template
+          method: POST
+          cors:
+            origin: "*"
+          authorizer: aws_iam
+
+  uploadFile:
+    handler: functions/tekkzy/upload-file.main
+    timeout: 29
+    events:
+      - http:
+          path: /admin/upload-file
+          method: POST
+          cors:
+            origin: "*"
+            headers:
+              - Content-Type
+              - Authorization
+              - X-Amz-Date
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+              - X-Amz-Content-Sha256
+            allowCredentials: true
+          authorizer: aws_iam
+
+  seedTemplateMetadata:
+    handler: functions/tekkzy/seed-template-metadata.main
+    events:
+      - http:
+          path: /tekkzy/seed-template-metadata
+          method: POST
+          cors:
+            origin: "*"
+          authorizer: aws_iam
+
+  createSite:
+    handler: functions/tekkzy/deployment/create-site.main
+    events:
+      - http:
+          path: /create-site
+          method: POST
+          cors:
+            origin: "*"
+          authorizer: aws_iam
+
+  deleteSite:
+    handler: functions/tekkzy/deployment/delete-site.main
+    timeout: 29
+    events:
+      - http:
+          path: /delete-site
+          method: POST
+          cors:
+            origin: "*"
+          authorizer: aws_iam
+
+  deploySite:
+    handler: functions/tekkzy/deployment/deploy-site.main
+    events:
+      - http:
+          path: /deploy-site
+          method: POST
+          cors:
+            origin: "*"
+          authorizer: aws_iam
+
+  attachDomain:
+    handler: functions/tekkzy/deployment/attach-domain.main
+    timeout: 30
+    events:
+      - http:
+          path: /attach-domain
+          method: POST
+          cors:
+            origin: "*"
+          authorizer: aws_iam
+
+  checkDomainAvailability:
+    handler: functions/tekkzy/deployment/checkDomainAvailability.main
+    timeout: 29
+    events:
+      - http:
+          path: /check-domain-availability
+          method: GET
+          cors:
+            origin: "*"
+          authorizer: aws_iam
+
+  checkSubdomainAvailability:
+    handler: functions/tekkzy/deployment/checkSubdomainAvailability.main
+    events:
+      - http:
+          path: /check-subdomain-availability
+          method: GET
+          cors:
+            origin: "*"
+          authorizer: aws_iam
+
+  checkDomainStatus:
+    handler: functions/tekkzy/deployment/checkDomainStatus.main
+    events:
+      - http:
+          path: /check-domain-status
+          method: GET
+          cors:
+            origin: "*"
+          authorizer: aws_iam
+
+  checkDomainValidation:
+    handler: functions/tekkzy/deployment/checkDomainValidation.main
+    events:
+      - http:
+          path: /check-domain-validation
+          method: GET
+          cors:
+            origin: "*"
+          authorizer: aws_iam
+
+  createCloudFrontDistribution:
+    handler: functions/tekkzy/deployment/createCloudFrontDistribution.main
+    timeout: 30
+    events:
+      - http:
+          path: /create-cloudfront-distribution
+          method: POST
+          cors:
+            origin: "*"
+          authorizer: aws_iam
+
+  createDomainDNSRecord:
+    handler: functions/tekkzy/deployment/createDomainDNSRecords.main
+    events:
+      - http:
+          path: /create-domain-dns-record
+          method: POST
+          cors:
+            origin: "*"
+          authorizer: aws_iam
+
+  registerDomain:
+    handler: functions/tekkzy/deployment/registerDomain.main
+    events:
+      - http:
+          path: /register-domain
+          method: POST
+          cors:
+            origin: "*"
+          authorizer: aws_iam
+
+  startDomainSetup:
+    handler: functions/tekkzy/deployment/startDomainSetup.main
+    timeout: 30
+    events:
+      - http:
+          path: /start-domain-setup
+          method: POST
+          cors:
+            origin: "*"
+          authorizer: aws_iam
+
+  updateSiteData:
+    handler: functions/tekkzy/deployment/updateSiteData.main
+    events:
+      - http:
+          path: /update-site-data
+          method: PUT
+          cors:
+            origin: "*"
+          authorizer: aws_iam
+
+  switchSiteTemplate:
+    handler: functions/tekkzy/deployment/switch-template.main
+    timeout: 30
+    events:
+      - http:
+          path: /switch-site-template
+          method: PUT
+          cors:
+            origin: "*"
+          authorizer: aws_iam
+
+  listUserSites:
+    handler: functions/tekkzy/list-site.main
+    events:
+      - http:
+          path: /list-user-sites
+          method: GET
+          cors:
+            origin: "*"
+          authorizer: aws_iam
+
+  getSite:
+    handler: functions/tekkzy/get-site.main
+    events:
+      - http:
+          path: /get-site
+          method: GET
+          cors:
+            origin: "*"
+          authorizer: aws_iam
+
+  createRazorpayOrder:
+    handler: functions/tekkzy/payment/create-order.main
+    events:
+      - http:
+          path: /create-razorpay-order
+          method: POST
+          cors:
+            origin: "*"
+          authorizer: aws_iam
+
+  verifyRazorpayPayment:
+    handler: functions/tekkzy/payment/verify-order.main
+    events:
+      - http:
+          path: /verify-razorpay-payment
+          method: POST
+          cors:
+            origin: "*"
+          authorizer: aws_iam
+
+  createPaymentSession:
+    handler: functions/tekkzy/payment/create-payment-session.main
+    events:
+      - http:
+          path: /create-payment-session
+          method: POST
+          cors:
+            origin: "*"
+          authorizer: aws_iam
+
+  finalizePaymentSession:
+    handler: functions/tekkzy/payment/finalize-payment-session.main
+    events:
+      - http:
+          path: /finalize-payment-session
+          method: POST
+          cors:
+            origin: "*"
+          authorizer: aws_iam
+
+  createPaypalOrder:
+    handler: functions/tekkzy/payment/create-paypal-order.main
+    events:
+      - http:
+          path: /create-paypal-order
+          method: POST
+          cors:
+            origin: "*"
+          authorizer: aws_iam
+
+  capturePaypalPayment:
+    handler: functions/tekkzy/payment/capture-paypal-order.main
+    events:
+      - http:
+          path: /capture-paypal-payment
+          method: POST
+          cors:
+            origin: "*"
+          authorizer: aws_iam
+
+  getPaymentDetails:
+    handler: functions/tekkzy/payment/get-payment-details.main
+    events:
+      - http:
+          path: /tekkzy/get-payment-details
+          method: GET
+          cors:
+            origin: "*"
+          authorizer: aws_iam
+
+  domainPricing:
+    handler: functions/tekkzy/domain-payment/getPricing.main
+    events:
+      - http:
+          path: /tekkzy/domain/pricing
+          method: GET
+          cors:
+            origin: "*"
+          authorizer: aws_iam
+
+  domainCheckoutCreate:
+    handler: functions/tekkzy/domain-payment/createCheckout.main
+    timeout: 30
+    events:
+      - http:
+          path: /tekkzy/domain/checkout/create
+          method: POST
+          cors:
+            origin: "*"
+          authorizer: aws_iam
+
+  domainCheckoutVerify:
+    handler: functions/tekkzy/domain-payment/verifyCheckout.main
+    timeout: 30
+    events:
+      - http:
+          path: /tekkzy/domain/checkout/verify
+          method: POST
+          cors:
+            origin: "*"
+          authorizer: aws_iam
+
+  domainWebhook:
+    handler: functions/tekkzy/domain-payment/webhook.main
+    events:
+      - http:
+          path: /tekkzy/domain/webhooks/razorpay
+          method: POST
+          cors:
+            origin: "*"
+
+  domainProvision:
+    handler: functions/tekkzy/domain-payment/provisionDomain.main
+    events:
+      - http:
+          path: /tekkzy/domain/provision
+          method: POST
+          cors:
+            origin: "*"
+          authorizer: aws_iam
+
+  domainStatus:
+    handler: functions/tekkzy/domain-payment/getDomainStatus.main
+    events:
+      - http:
+          path: /tekkzy/domain/status
+          method: GET
+          cors:
+            origin: "*"
+          authorizer: aws_iam
+
+  # Public contact form for all template sites (SES).
+  # Frontend passes _meta.toEmail from data.json site.contact.email / contactMail.
+  sendContact:
+    handler: functions/tekkzy/contact/send-contact.main
+    events:
+      - http:
+          path: /tekkzy/contact
+          method: POST
+          cors:
+            origin: "*"

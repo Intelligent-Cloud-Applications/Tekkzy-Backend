@@ -1,0 +1,41 @@
+{
+  "name": "tekkzy-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Standalone Tekkzy API (profiles, sites, deploy, Razorpay domain payments)",
+  "scripts": {
+    "deploy": "serverless deploy --stage dev --region us-east-2",
+    "deploy:prod": "serverless deploy --stage prod --region us-east-1",
+    "offline": "serverless offline start",
+    "test": "node --test functions/tekkzy/domain-payment/__tests__/*.test.js",
+    "test:domain-payment": "node --test functions/tekkzy/domain-payment/__tests__/*.test.js"
+  },
+  "dependencies": {
+    "@aws-sdk/client-acm": "^3.971.0",
+    "@aws-sdk/client-cloudfront": "^3.1000.0",
+    "@aws-sdk/client-cognito-identity": "^3.1000.0",
+    "@aws-sdk/client-cognito-identity-provider": "^3.567.0",
+    "@aws-sdk/client-dynamodb": "^3.567.0",
+    "@aws-sdk/client-route-53": "^3.971.0",
+    "@aws-sdk/client-route-53-domains": "^3.1004.0",
+    "@aws-sdk/client-s3": "^3.567.0",
+    "@aws-sdk/client-ses": "^3.1000.0",
+    "@aws-sdk/client-sns": "^3.1000.0",
+    "@aws-sdk/lib-dynamodb": "^3.567.0",
+    "@aws-sdk/s3-request-presigner": "^3.1000.0",
+    "axios": "^1.7.2",
+    "razorpay": "^2.9.6",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.20.2",
+    "serverless": "^3.40.0",
+    "serverless-dotenv-plugin": "^6.0.0",
+    "serverless-esbuild": "^1.57.0",
+    "serverless-offline": "^13.8.0",
+    "serverless-plugin-common-excludes": "^4.0.0",
+    "serverless-plugin-include-dependencies": "^5.1.0",
+    "serverless-plugin-split-stacks": "^1.13.0"
+  },
+  "packageManager": "yarn@1.22.22"
+}
