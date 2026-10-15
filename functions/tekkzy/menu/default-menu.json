@@ -1,0 +1,531 @@
+{
+  "categories": [
+    {
+      "id": "cat-starters",
+      "name": "Starters",
+      "slug": "starters",
+      "description": "Crispy appetizers, kebabs, and quick bites.",
+      "imageUrl": "https://institution-utils.s3.us-east-1.amazonaws.com/THEK6490/dishes/starters.jpg",
+      "isActive": true,
+      "sortOrder": 1,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "cat-main-course",
+      "name": "Main Course",
+      "slug": "main-course",
+      "description": "Rich royal gravies, curries, and signature stews.",
+      "imageUrl": "https://institution-utils.s3.us-east-1.amazonaws.com/THEK6490/dishes/main-course.jpg",
+      "isActive": true,
+      "sortOrder": 2,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "cat-chinese",
+      "name": "Chinese",
+      "slug": "chinese",
+      "description": "Wok-tossed noodles, fried rice, and oriental delights.",
+      "imageUrl": "https://institution-utils.s3.us-east-1.amazonaws.com/THEK6490/dishes/chinese.jpg",
+      "isActive": true,
+      "sortOrder": 3,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "cat-breads-rice",
+      "name": "Breads & Rice",
+      "slug": "breads-rice",
+      "description": "Tandoori breads, parathas, and fragrant aromatic rices.",
+      "imageUrl": "https://institution-utils.s3.us-east-1.amazonaws.com/THEK6490/dishes/tandoor.jpg",
+      "isActive": true,
+      "sortOrder": 4,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "cat-sweets-desserts",
+      "name": "Sweets & Desserts",
+      "slug": "sweets-desserts",
+      "description": "Traditional confections and sweet finales.",
+      "imageUrl": "https://institution-utils.s3.us-east-1.amazonaws.com/THEK6490/dishes/sweets-desserts.jpg",
+      "isActive": true,
+      "sortOrder": 5,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "cat-beverages",
+      "name": "Beverages",
+      "slug": "beverages",
+      "description": "Handcrafted mocktails, fresh coolers, and artisan shakes.",
+      "imageUrl": "https://institution-utils.s3.us-east-1.amazonaws.com/THEK6490/dishes/beverages.jpg",
+      "isActive": true,
+      "sortOrder": 6,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    }
+  ],
+  "items": [
+    {
+      "id": "dish-paneer-tikka",
+      "name": "Paneer Tikka",
+      "categoryId": "cat-starters",
+      "categoryName": "Starters",
+      "price": 280,
+      "shortDescription": "Cottage cheese marinated in spices and grilled to perfection.",
+      "detailedDescription": "Fresh malai paneer cubes steeped in hung curd, Kashmiri deggi mirch, and hand-ground royal garam masala, flame-blistered in our clay tandoor.",
+      "dietaryType": "veg",
+      "imageUrl": "https://institution-utils.s3.us-east-1.amazonaws.com/THEK6490/dishes/vegetarian.jpg",
+      "additionalImages": [
+        "https://institution-utils.s3.us-east-1.amazonaws.com/THEK6490/dishes/vegetarian.jpg",
+        "https://institution-utils.s3.us-east-1.amazonaws.com/THEK6490/dishes/starters.jpg",
+        "https://institution-utils.s3.us-east-1.amazonaws.com/THEK6490/dishes/tandoor.jpg"
+      ],
+      "videoUrl": "https://www.youtube.com/watch?v=uD5o8_0mOvg",
+      "ingredients": [
+        "Cottage cheese",
+        "Yogurt",
+        "Bell peppers",
+        "Onion",
+        "Tandoori spices"
+      ],
+      "allergens": [
+        "Dairy"
+      ],
+      "isFeatured": true,
+      "isAvailable": true,
+      "publicationStatus": "published",
+      "sortOrder": 1,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "dish-crispy-corn",
+      "name": "Crispy Corn",
+      "categoryId": "cat-starters",
+      "categoryName": "Starters",
+      "price": 180,
+      "shortDescription": "Crispy corn tossed with herbs and signature spices.",
+      "detailedDescription": "Sweet American corn kernels batter-fried till golden crisp, seasoned with roasted cumin, chaat masala, spring onions, and lemon zest.",
+      "dietaryType": "veg",
+      "imageUrl": "https://institution-utils.s3.us-east-1.amazonaws.com/THEK6490/dishes/starters.jpg",
+      "additionalImages": [
+        "https://institution-utils.s3.us-east-1.amazonaws.com/THEK6490/dishes/starters.jpg"
+      ],
+      "ingredients": [
+        "Sweet corn",
+        "Herbs",
+        "Lemon",
+        "Spices"
+      ],
+      "allergens": [],
+      "isFeatured": false,
+      "isAvailable": true,
+      "publicationStatus": "published",
+      "sortOrder": 2,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "dish-chicken-boti-kebab",
+      "name": "Chicken Boti Kebab",
+      "categoryId": "cat-starters",
+      "categoryName": "Starters",
+      "price": 320,
+      "shortDescription": "Tender chicken pieces marinated and grilled with aromatic spices.",
+      "detailedDescription": "Succulent boneless chicken chunks marinated in ginger-garlic paste, raw papaya, and roasted spices, charcoal-grilled to tender juiciness.",
+      "dietaryType": "non-veg",
+      "imageUrl": "https://institution-utils.s3.us-east-1.amazonaws.com/THEK6490/dishes/non-vegetarian.jpg",
+      "additionalImages": [
+        "https://institution-utils.s3.us-east-1.amazonaws.com/THEK6490/dishes/non-vegetarian.jpg",
+        "https://institution-utils.s3.us-east-1.amazonaws.com/THEK6490/dishes/tandoor.jpg",
+        "https://institution-utils.s3.us-east-1.amazonaws.com/THEK6490/dishes/starters.jpg"
+      ],
+      "videoUrl": "https://www.youtube.com/watch?v=gT1u3lU324I",
+      "ingredients": [
+        "Chicken",
+        "Yogurt",
+        "Ginger-garlic",
+        "Mughlai spices"
+      ],
+      "allergens": [
+        "Dairy"
+      ],
+      "isFeatured": true,
+      "isAvailable": true,
+      "publicationStatus": "published",
+      "sortOrder": 3,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "dish-prawn-tempura",
+      "name": "Prawn Tempura",
+      "categoryId": "cat-starters",
+      "categoryName": "Starters",
+      "price": 420,
+      "shortDescription": "Crispy battered golden prawns served with zesty dip.",
+      "detailedDescription": "King prawns lightly coated in feather-light tempura batter, flash-fried and served with hot sweet chilli glaze.",
+      "dietaryType": "non-veg",
+      "imageUrl": "https://institution-utils.s3.us-east-1.amazonaws.com/THEK6490/dishes/seafood.jpg",
+      "additionalImages": [
+        "https://institution-utils.s3.us-east-1.amazonaws.com/THEK6490/dishes/seafood.jpg",
+        "https://institution-utils.s3.us-east-1.amazonaws.com/THEK6490/dishes/starters.jpg"
+      ],
+      "ingredients": [
+        "Prawns",
+        "Tempura flour",
+        "Chilli dip"
+      ],
+      "allergens": [
+        "Shellfish",
+        "Gluten"
+      ],
+      "isFeatured": false,
+      "isAvailable": true,
+      "publicationStatus": "published",
+      "sortOrder": 4,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "dish-kalahandi-biryani",
+      "name": "Kalahandi Special Biryani",
+      "categoryId": "cat-main-course",
+      "categoryName": "Main Course",
+      "price": 350,
+      "halfPrice": 180,
+      "shortDescription": "Fragrant basmati rice slow-cooked with tender chicken, traditional Kalahandi spices and aromatic herbs, served with raita and salad.",
+      "detailedDescription": "Our signature Kalahandi Special Biryani is a celebration of Odisha's culinary heritage. Prepared with premium basmati rice, tender pieces of chicken, and a special blend of handpicked spices, this biryani is slow-cooked to perfection, locking in rich flavours and irresistible aroma.",
+      "dietaryType": "non-veg",
+      "imageUrl": "https://institution-utils.s3.us-east-1.amazonaws.com/THEK6490/dishes/hero-dish-dark.jpg",
+      "additionalImages": [
+        "https://institution-utils.s3.us-east-1.amazonaws.com/THEK6490/dishes/hero-dish-dark.jpg",
+        "https://institution-utils.s3.us-east-1.amazonaws.com/THEK6490/dishes/main-course.jpg",
+        "https://institution-utils.s3.us-east-1.amazonaws.com/THEK6490/dishes/hero-dish.jpg",
+        "https://institution-utils.s3.us-east-1.amazonaws.com/THEK6490/dishes/specials.jpg"
+      ],
+      "videoUrl": "https://www.youtube.com/watch?v=F3_j-X2Y2F4",
+      "ingredients": [
+        "Basmati rice",
+        "Chicken",
+        "Saffron",
+        "Ghee",
+        "Whole spices"
+      ],
+      "allergens": [
+        "Dairy"
+      ],
+      "isFeatured": true,
+      "isAvailable": true,
+      "publicationStatus": "published",
+      "sortOrder": 1,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "dish-paneer-butter-masala",
+      "name": "Paneer Butter Masala",
+      "categoryId": "cat-main-course",
+      "categoryName": "Main Course",
+      "price": 300,
+      "halfPrice": 160,
+      "shortDescription": "Soft paneer in a rich tomato and cashew gravy.",
+      "detailedDescription": "Velvety makhani gravy enriched with ripe vine tomatoes, slow-churned butter, cashew paste, and aromatic dried fenugreek leaves (kasuri methi).",
+      "dietaryType": "veg",
+      "imageUrl": "https://institution-utils.s3.us-east-1.amazonaws.com/THEK6490/dishes/main-course.jpg",
+      "additionalImages": [
+        "https://institution-utils.s3.us-east-1.amazonaws.com/THEK6490/dishes/main-course.jpg",
+        "https://institution-utils.s3.us-east-1.amazonaws.com/THEK6490/dishes/vegetarian.jpg"
+      ],
+      "videoUrl": "https://www.youtube.com/watch?v=kYv_bXU74zQ",
+      "ingredients": [
+        "Paneer",
+        "Cashew paste",
+        "Butter",
+        "Tomato gravy"
+      ],
+      "allergens": [
+        "Dairy",
+        "Tree nuts"
+      ],
+      "isFeatured": false,
+      "isAvailable": true,
+      "publicationStatus": "published",
+      "sortOrder": 2,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "dish-mutton-rogan-josh",
+      "name": "Mutton Rogan Josh",
+      "categoryId": "cat-main-course",
+      "categoryName": "Main Course",
+      "price": 420,
+      "halfPrice": 230,
+      "shortDescription": "Slow-braised tender mutton in Kashmiri chilli and ratan jot essence.",
+      "detailedDescription": "Prime bone-in mutton pieces slow-cooked with aromatic spices, fennel seeds, dried ginger, and natural cockscomb flower extract for its signature royal ruby hue.",
+      "dietaryType": "non-veg",
+      "imageUrl": "https://institution-utils.s3.us-east-1.amazonaws.com/THEK6490/dishes/indo-chinese.jpg",
+      "ingredients": [
+        "Tender mutton",
+        "Kashmiri chilli",
+        "Fennel seeds",
+        "Ginger",
+        "Mustard oil"
+      ],
+      "allergens": [],
+      "isFeatured": true,
+      "isAvailable": true,
+      "publicationStatus": "published",
+      "sortOrder": 3,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z",
+      "additionalImages": []
+    },
+    {
+      "id": "dish-chicken-curry",
+      "name": "Chicken Curry",
+      "categoryId": "cat-main-course",
+      "categoryName": "Main Course",
+      "price": 340,
+      "halfPrice": 190,
+      "shortDescription": "Traditional chicken curry with signature Kalahandi spices.",
+      "detailedDescription": "A heritage family recipe featuring slow-caramelized onions, hand-ground coriander, black cardamom, and tender country chicken simmering in rich broth.",
+      "dietaryType": "non-veg",
+      "imageUrl": "https://institution-utils.s3.us-east-1.amazonaws.com/THEK6490/dishes/indo-chinese.jpg",
+      "ingredients": [
+        "Chicken",
+        "Onion",
+        "Kalahandi spices",
+        "Mustard oil"
+      ],
+      "allergens": [],
+      "isFeatured": true,
+      "isAvailable": true,
+      "publicationStatus": "published",
+      "sortOrder": 4,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z",
+      "additionalImages": []
+    },
+    {
+      "id": "dish-veg-hakka-noodles",
+      "name": "Veg Hakka Noodles",
+      "categoryId": "cat-chinese",
+      "categoryName": "Chinese",
+      "price": 220,
+      "shortDescription": "Stir-fried noodles with fresh vegetables and oriental spices.",
+      "detailedDescription": "Wok-tossed noodles tossed over high flame with julienned bell peppers, shredded cabbage, carrots, spring onions, and light soy sauce.",
+      "dietaryType": "veg",
+      "imageUrl": "https://institution-utils.s3.us-east-1.amazonaws.com/THEK6490/dishes/chinese.jpg",
+      "ingredients": [
+        "Noodles",
+        "Bell peppers",
+        "Cabbage",
+        "Soy sauce"
+      ],
+      "allergens": [
+        "Gluten",
+        "Soy"
+      ],
+      "isFeatured": false,
+      "isAvailable": true,
+      "publicationStatus": "published",
+      "sortOrder": 1,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z",
+      "additionalImages": []
+    },
+    {
+      "id": "dish-chilli-chicken",
+      "name": "Chilli Chicken",
+      "categoryId": "cat-chinese",
+      "categoryName": "Chinese",
+      "price": 320,
+      "shortDescription": "Crispy chicken tossed in spicy chilli sauce.",
+      "detailedDescription": "Crisp boneless chicken tossed with diced capsicum, shallots, green chillies, and savory dark soy glaze.",
+      "dietaryType": "non-veg",
+      "imageUrl": "https://institution-utils.s3.us-east-1.amazonaws.com/THEK6490/dishes/indo-chinese.jpg",
+      "ingredients": [
+        "Chicken",
+        "Capsicum",
+        "Soy sauce",
+        "Green chillies"
+      ],
+      "allergens": [
+        "Gluten",
+        "Soy"
+      ],
+      "isFeatured": true,
+      "isAvailable": true,
+      "publicationStatus": "published",
+      "sortOrder": 2,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z",
+      "additionalImages": []
+    },
+    {
+      "id": "dish-schezwan-fried-rice",
+      "name": "Schezwan Fried Rice",
+      "categoryId": "cat-chinese",
+      "categoryName": "Chinese",
+      "price": 240,
+      "shortDescription": "Wok-tossed rice with vegetables and schezwan flavour.",
+      "detailedDescription": "Aromatic basmati rice tossed with fiery house-made Sichuan pepper sauce, crunchy diced vegetables, and fresh garlic.",
+      "dietaryType": "veg",
+      "imageUrl": "https://institution-utils.s3.us-east-1.amazonaws.com/THEK6490/dishes/chinese.jpg",
+      "ingredients": [
+        "Rice",
+        "Sichuan peppers",
+        "Garlic",
+        "Mixed vegetables"
+      ],
+      "allergens": [
+        "Soy"
+      ],
+      "isFeatured": false,
+      "isAvailable": true,
+      "publicationStatus": "published",
+      "sortOrder": 3,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z",
+      "additionalImages": []
+    },
+    {
+      "id": "dish-garlic-naan",
+      "name": "Garlic Naan",
+      "categoryId": "cat-breads-rice",
+      "categoryName": "Breads & Rice",
+      "price": 60,
+      "shortDescription": "Soft and fluffy naan topped with garlic and herbs.",
+      "detailedDescription": "Clay-oven baked leavened bread generously topped with freshly minced garlic and cilantro, brushed with pure clarified butter.",
+      "dietaryType": "veg",
+      "imageUrl": "https://institution-utils.s3.us-east-1.amazonaws.com/THEK6490/dishes/tandoor.jpg",
+      "ingredients": [
+        "Refined flour",
+        "Fresh garlic",
+        "Butter",
+        "Coriander"
+      ],
+      "allergens": [
+        "Gluten",
+        "Dairy"
+      ],
+      "isFeatured": false,
+      "isAvailable": true,
+      "publicationStatus": "published",
+      "sortOrder": 1,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z",
+      "additionalImages": []
+    },
+    {
+      "id": "dish-lachha-paratha",
+      "name": "Lachha Paratha",
+      "categoryId": "cat-breads-rice",
+      "categoryName": "Breads & Rice",
+      "price": 70,
+      "shortDescription": "Layered whole wheat paratha.",
+      "detailedDescription": "Multi-layered flaky whole wheat flatbread rolled with ghee and baked crisp in the tandoor.",
+      "dietaryType": "veg",
+      "imageUrl": "https://institution-utils.s3.us-east-1.amazonaws.com/THEK6490/dishes/tandoor.jpg",
+      "ingredients": [
+        "Whole wheat flour",
+        "Ghee"
+      ],
+      "allergens": [
+        "Gluten",
+        "Dairy"
+      ],
+      "isFeatured": false,
+      "isAvailable": true,
+      "publicationStatus": "published",
+      "sortOrder": 2,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z",
+      "additionalImages": []
+    },
+    {
+      "id": "dish-jeera-rice",
+      "name": "Jeera Rice",
+      "categoryId": "cat-breads-rice",
+      "categoryName": "Breads & Rice",
+      "price": 180,
+      "shortDescription": "Aromatic basmati rice tempered with cumin.",
+      "detailedDescription": "Steamed basmati rice tempered in fragrant desi ghee with whole roasted cumin seeds and fresh coriander garnish.",
+      "dietaryType": "veg",
+      "imageUrl": "https://institution-utils.s3.us-east-1.amazonaws.com/THEK6490/dishes/main-course.jpg",
+      "ingredients": [
+        "Basmati rice",
+        "Cumin seeds",
+        "Desi ghee"
+      ],
+      "allergens": [
+        "Dairy"
+      ],
+      "isFeatured": false,
+      "isAvailable": true,
+      "publicationStatus": "published",
+      "sortOrder": 3,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z",
+      "additionalImages": []
+    },
+    {
+      "id": "dish-gulab-jamun",
+      "name": "Shahi Gulab Jamun",
+      "categoryId": "cat-sweets-desserts",
+      "categoryName": "Sweets & Desserts",
+      "price": 150,
+      "shortDescription": "Soft golden milk dumplings steeped in cardamom saffron syrup.",
+      "detailedDescription": "Hand-rolled khoya dumplings fried in pure ghee, immersed in warm rose-infused sugar syrup and garnished with pistachio slivers.",
+      "dietaryType": "veg",
+      "imageUrl": "https://institution-utils.s3.us-east-1.amazonaws.com/THEK6490/dishes/sweets-desserts.jpg",
+      "ingredients": [
+        "Khoya",
+        "Saffron",
+        "Cardamom",
+        "Pistachio"
+      ],
+      "allergens": [
+        "Dairy",
+        "Tree nuts"
+      ],
+      "isFeatured": true,
+      "isAvailable": true,
+      "publicationStatus": "published",
+      "sortOrder": 1,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z",
+      "additionalImages": []
+    },
+    {
+      "id": "dish-heritage-mocktail",
+      "name": "Kalahandi Sunset Cooler",
+      "categoryId": "cat-beverages",
+      "categoryName": "Beverages",
+      "price": 190,
+      "shortDescription": "Refreshing citrus mocktail with pomegranate and fresh mint.",
+      "detailedDescription": "Sparkling citrus infusion blended with cold-pressed pomegranate, fresh mint leaves, black salt, and a splash of ginger fizz.",
+      "dietaryType": "veg",
+      "imageUrl": "https://institution-utils.s3.us-east-1.amazonaws.com/THEK6490/dishes/beverages.jpg",
+      "ingredients": [
+        "Pomegranate",
+        "Lime",
+        "Mint",
+        "Ginger fizz"
+      ],
+      "allergens": [],
+      "isFeatured": true,
+      "isAvailable": true,
+      "publicationStatus": "published",
+      "sortOrder": 1,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z",
+      "additionalImages": []
+    }
+  ]
+}
