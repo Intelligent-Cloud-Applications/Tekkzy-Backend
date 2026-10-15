@@ -20,7 +20,7 @@ module.exports.main = async (event) => {
       event?.requestContext?.identity?.cognitoIdentityId;
 
     const cognitoId = ctxCognitoId || data.cognitoId || data.sub || data.id;
-    const institution = 'tekkzy';
+    const institution = event?.pathParameters?.institution || data?.institution || 'tekkzy';
 
     if (!cognitoId) {
       return response(400, { error: 'cognitoId is required (from requestContext, authorizer claims, or request body/query).' });
