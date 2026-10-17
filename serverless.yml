@@ -24,7 +24,7 @@ custom:
   dotenv:
     path: ${env:SLS_DOTENV_PATH, '.env'}
   esbuild:
-    packager: "yarn"
+    packager: "npm"
     concurrency: 4
     zipConcurrency: 1
     bundle: true
@@ -45,6 +45,7 @@ provider:
   runtime: nodejs20.x
   region: ${opt:region, 'us-east-2'}
   stage: ${opt:stage, 'dev'}
+  deploymentMethod: direct
   memorySize: 512
   timeout: 29
   deploymentBucket:
@@ -53,31 +54,29 @@ provider:
     STAGE: ${self:provider.stage}
     DATA_AWS_REGION: ${env:DATA_AWS_REGION, self:provider.region}
     COGNITO_REGION: ${env:COGNITO_REGION, env:DATA_AWS_REGION, self:provider.region}
-    RAZORPAY_TEST_KEY_ID: ${env:RAZORPAY_TEST_KEY_ID}
-    RAZORPAY_TEST_SECRET_KEY: ${env:RAZORPAY_TEST_SECRET_KEY}
-    RAZORPAY_WEBHOOK_SECRET: ${env:RAZORPAY_WEBHOOK_SECRET, env:RAZORPAY_TEST_SECRET_KEY}
+    RAZORPAY_TEST_KEY_ID: ${env:RAZORPAY_TEST_KEY_ID, ''}
+    RAZORPAY_TEST_SECRET_KEY: ${env:RAZORPAY_TEST_SECRET_KEY, ''}
+    RAZORPAY_WEBHOOK_SECRET: ${env:RAZORPAY_WEBHOOK_SECRET, ''}
     RAZORPAY_PLAN_ID_MONTHLY: ${env:RAZORPAY_PLAN_ID_MONTHLY, ''}
     RAZORPAY_PLAN_ID_YEARLY: ${env:RAZORPAY_PLAN_ID_YEARLY, ''}
     TEKKZY_DOMAIN_GRACE_DAYS: ${env:TEKKZY_DOMAIN_GRACE_DAYS, '7'}
     DOMAIN_MARKUP_USD: ${env:DOMAIN_MARKUP_USD, '5'}
     USD_TO_INR_RATE: ${env:USD_TO_INR_RATE, '86'}
-    PROFILE_TABLE_NAME: ${env:PROFILE_TABLE_NAME}
-    PAYMENT_TABLE_NAME: ${env:PAYMENT_TABLE_NAME}
-    BETA_TEMPLATE_TABLE: ${env:BETA_TEMPLATE_TABLE}
-    SITE_TABLE: ${env:SITE_TABLE}
-    HOSTED_ZONE_ID: ${env:HOSTED_ZONE_ID}
-    SITE_DEPLOY_BUCKET: ${env:SITE_DEPLOY_BUCKET}
+    PROFILE_TABLE_NAME: ${env:PROFILE_TABLE_NAME, 'beta_user_profile'}
+    PAYMENT_TABLE_NAME: ${env:PAYMENT_TABLE_NAME, 'beta_payment'}
+    BETA_TEMPLATE_TABLE: ${env:BETA_TEMPLATE_TABLE, 'beta_tekkzy_template'}
+    SITE_TABLE: ${env:SITE_TABLE, 'beta_site_table'}
+    HOSTED_ZONE_ID: ${env:HOSTED_ZONE_ID, ''}
+    SITE_DEPLOY_BUCKET: ${env:SITE_DEPLOY_BUCKET, 'thekalahandiheritage.com'}
     TEMPLATE_ASSETS_BUCKET: ${env:TEMPLATE_ASSETS_BUCKET, 'institution-utils'}
     TEMPLATE_ASSETS_BUCKET_REGION: ${env:TEMPLATE_ASSETS_BUCKET_REGION, 'us-east-1'}
-    COGNITO_USER_POOL_ID: ${env:COGNITO_USER_POOL_ID}
-    COGNITO_CLIENT_ID: ${env:COGNITO_CLIENT_ID}
-    COGNITO_IDENTITY_POOL_ID: ${env:COGNITO_IDENTITY_POOL_ID}
+    COGNITO_USER_POOL_ID: ${env:COGNITO_USER_POOL_ID, 'us-east-2_J02pfxenV'}
+    COGNITO_CLIENT_ID: ${env:COGNITO_CLIENT_ID, '1oui8eijud46ajipjeg01h4i3m'}
+    COGNITO_IDENTITY_POOL_ID: ${env:COGNITO_IDENTITY_POOL_ID, 'us-east-2:2966c931-c163-4682-89d6-9bf8c491e5b7'}
     PAYPAL_CLIENT_ID: ${env:PAYPAL_CLIENT_ID, ''}
     PAYPAL_SECRET: ${env:PAYPAL_SECRET, ''}
     AWSAIAPP_PAYPAL_CLIENT_ID: ${env:AWSAIAPP_PAYPAL_CLIENT_ID, ''}
     AWSAIAPP_PAYPAL_SECRET: ${env:AWSAIAPP_PAYPAL_SECRET, ''}
-    SES_FROM_EMAIL: ${env:SES_FROM_EMAIL, 'saibedamatta@happyprancer.com'}
-    QUERY_TO_EMAIL: ${env:QUERY_TO_EMAIL, 'saibedamatta@happyprancer.com'}
   iam:
     role:
       statements:
@@ -112,6 +111,12 @@ functions:
     handler: functions/tekkzy/get-profile.main
     events:
       - http:
+          path: /{institution}/get-profile
+          method: GET
+          cors:
+            origin: "*"
+          authorizer: aws_iam
+      - http:
           path: /get-profile
           method: GET
           cors:
@@ -121,6 +126,12 @@ functions:
   createProfile:
     handler: functions/tekkzy/create-profile.main
     events:
+      - http:
+          path: /{institution}/create-profile
+          method: POST
+          cors:
+            origin: "*"
+          authorizer: aws_iam
       - http:
           path: /create-profile
           method: POST
@@ -132,6 +143,12 @@ functions:
     handler: functions/tekkzy/update-profile.main
     events:
       - http:
+          path: /{institution}/update-profile
+          method: PUT
+          cors:
+            origin: "*"
+          authorizer: aws_iam
+      - http:
           path: /update-profile
           method: PUT
           cors:
@@ -142,6 +159,11 @@ functions:
     handler: functions/tekkzy/list-template.main
     events:
       - http:
+          path: /{institution}/list-templates
+          method: GET
+          cors:
+            origin: "*"
+      - http:
           path: /list-templates
           method: GET
           cors:
@@ -150,6 +172,12 @@ functions:
   updateTemplate:
     handler: functions/tekkzy/update-template.main
     events:
+      - http:
+          path: /{institution}/update-template
+          method: PUT
+          cors:
+            origin: "*"
+          authorizer: aws_iam
       - http:
           path: /tekkzy/update-template
           method: PUT
@@ -161,6 +189,12 @@ functions:
     handler: functions/tekkzy/delete-template.main
     events:
       - http:
+          path: /{institution}/delete-template
+          method: POST
+          cors:
+            origin: "*"
+          authorizer: aws_iam
+      - http:
           path: /tekkzy/delete-template
           method: POST
           cors:
@@ -170,6 +204,12 @@ functions:
   uploadTemplate:
     handler: functions/tekkzy/upload-template.main
     events:
+      - http:
+          path: /{institution}/upload-template
+          method: POST
+          cors:
+            origin: "*"
+          authorizer: aws_iam
       - http:
           path: /tekkzy/upload-template
           method: POST
@@ -181,6 +221,21 @@ functions:
     handler: functions/tekkzy/upload-file.main
     timeout: 29
     events:
+      - http:
+          path: /{institution}/upload-file
+          method: POST
+          cors:
+            origin: "*"
+            headers:
+              - Content-Type
+              - Authorization
+              - X-Amz-Date
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+              - X-Amz-Content-Sha256
+            allowCredentials: true
+          authorizer: aws_iam
       - http:
           path: /admin/upload-file
           method: POST
@@ -201,6 +256,12 @@ functions:
     handler: functions/tekkzy/seed-template-metadata.main
     events:
       - http:
+          path: /{institution}/seed-template-metadata
+          method: POST
+          cors:
+            origin: "*"
+          authorizer: aws_iam
+      - http:
           path: /tekkzy/seed-template-metadata
           method: POST
           cors:
@@ -210,6 +271,12 @@ functions:
   createSite:
     handler: functions/tekkzy/deployment/create-site.main
     events:
+      - http:
+          path: /{institution}/create-site
+          method: POST
+          cors:
+            origin: "*"
+          authorizer: aws_iam
       - http:
           path: /create-site
           method: POST
@@ -222,6 +289,12 @@ functions:
     timeout: 29
     events:
       - http:
+          path: /{institution}/delete-site
+          method: POST
+          cors:
+            origin: "*"
+          authorizer: aws_iam
+      - http:
           path: /delete-site
           method: POST
           cors:
@@ -231,6 +304,12 @@ functions:
   deploySite:
     handler: functions/tekkzy/deployment/deploy-site.main
     events:
+      - http:
+          path: /{institution}/deploy-site
+          method: POST
+          cors:
+            origin: "*"
+          authorizer: aws_iam
       - http:
           path: /deploy-site
           method: POST
@@ -243,6 +322,12 @@ functions:
     timeout: 30
     events:
       - http:
+          path: /{institution}/attach-domain
+          method: POST
+          cors:
+            origin: "*"
+          authorizer: aws_iam
+      - http:
           path: /attach-domain
           method: POST
           cors:
@@ -254,6 +339,12 @@ functions:
     timeout: 29
     events:
       - http:
+          path: /{institution}/check-domain-availability
+          method: GET
+          cors:
+            origin: "*"
+          authorizer: aws_iam
+      - http:
           path: /check-domain-availability
           method: GET
           cors:
@@ -263,6 +354,12 @@ functions:
   checkSubdomainAvailability:
     handler: functions/tekkzy/deployment/checkSubdomainAvailability.main
     events:
+      - http:
+          path: /{institution}/check-subdomain-availability
+          method: GET
+          cors:
+            origin: "*"
+          authorizer: aws_iam
       - http:
           path: /check-subdomain-availability
           method: GET
@@ -274,6 +371,12 @@ functions:
     handler: functions/tekkzy/deployment/checkDomainStatus.main
     events:
       - http:
+          path: /{institution}/check-domain-status
+          method: GET
+          cors:
+            origin: "*"
+          authorizer: aws_iam
+      - http:
           path: /check-domain-status
           method: GET
           cors:
@@ -283,6 +386,12 @@ functions:
   checkDomainValidation:
     handler: functions/tekkzy/deployment/checkDomainValidation.main
     events:
+      - http:
+          path: /{institution}/check-domain-validation
+          method: GET
+          cors:
+            origin: "*"
+          authorizer: aws_iam
       - http:
           path: /check-domain-validation
           method: GET
@@ -295,6 +404,12 @@ functions:
     timeout: 30
     events:
       - http:
+          path: /{institution}/create-cloudfront-distribution
+          method: POST
+          cors:
+            origin: "*"
+          authorizer: aws_iam
+      - http:
           path: /create-cloudfront-distribution
           method: POST
           cors:
@@ -305,6 +420,12 @@ functions:
     handler: functions/tekkzy/deployment/createDomainDNSRecords.main
     events:
       - http:
+          path: /{institution}/create-domain-dns-record
+          method: POST
+          cors:
+            origin: "*"
+          authorizer: aws_iam
+      - http:
           path: /create-domain-dns-record
           method: POST
           cors:
@@ -314,6 +435,12 @@ functions:
   registerDomain:
     handler: functions/tekkzy/deployment/registerDomain.main
     events:
+      - http:
+          path: /{institution}/register-domain
+          method: POST
+          cors:
+            origin: "*"
+          authorizer: aws_iam
       - http:
           path: /register-domain
           method: POST
@@ -326,6 +453,12 @@ functions:
     timeout: 30
     events:
       - http:
+          path: /{institution}/start-domain-setup
+          method: POST
+          cors:
+            origin: "*"
+          authorizer: aws_iam
+      - http:
           path: /start-domain-setup
           method: POST
           cors:
@@ -335,6 +468,12 @@ functions:
   updateSiteData:
     handler: functions/tekkzy/deployment/updateSiteData.main
     events:
+      - http:
+          path: /{institution}/update-site-data
+          method: PUT
+          cors:
+            origin: "*"
+          authorizer: aws_iam
       - http:
           path: /update-site-data
           method: PUT
@@ -347,6 +486,12 @@ functions:
     timeout: 30
     events:
       - http:
+          path: /{institution}/switch-site-template
+          method: PUT
+          cors:
+            origin: "*"
+          authorizer: aws_iam
+      - http:
           path: /switch-site-template
           method: PUT
           cors:
@@ -357,6 +502,12 @@ functions:
     handler: functions/tekkzy/list-site.main
     events:
       - http:
+          path: /{institution}/list-user-sites
+          method: GET
+          cors:
+            origin: "*"
+          authorizer: aws_iam
+      - http:
           path: /list-user-sites
           method: GET
           cors:
@@ -366,6 +517,12 @@ functions:
   getSite:
     handler: functions/tekkzy/get-site.main
     events:
+      - http:
+          path: /{institution}/get-site
+          method: GET
+          cors:
+            origin: "*"
+          authorizer: aws_iam
       - http:
           path: /get-site
           method: GET
@@ -504,13 +661,134 @@ functions:
             origin: "*"
           authorizer: aws_iam
 
-  # Public contact form for all template sites (SES).
-  # Frontend passes _meta.toEmail from data.json site.contact.email / contactMail.
+  # Public contact form for all template sites (SES)
   sendContact:
     handler: functions/tekkzy/contact/send-contact.main
     events:
+      - http:
+          path: /{institution}/contact
+          method: POST
+          cors:
+            origin: "*"
       - http:
           path: /tekkzy/contact
           method: POST
           cors:
             origin: "*"
+
+  # Restaurant Menu & CMS Management (Multi-tenant by institution)
+  menuHandler:
+    handler: functions/tekkzy/menu/menu-handler.main
+    events:
+      - http:
+          path: /{institution}/menu/{proxy+}
+          method: ANY
+          cors:
+            origin: "*"
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+              - x-institution-id
+            allowCredentials: true
+      - http:
+          path: /{institution}/admin/menu/{proxy+}
+          method: ANY
+          cors:
+            origin: "*"
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+              - x-institution-id
+            allowCredentials: true
+      - http:
+          path: /{institution}/admin/dashboard/stats
+          method: GET
+          cors:
+            origin: "*"
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+              - x-institution-id
+            allowCredentials: true
+      - http:
+          path: /{institution}/admin/uploads/presign
+          method: POST
+          cors:
+            origin: "*"
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+              - x-institution-id
+            allowCredentials: true
+      - http:
+          path: /admin/menu/{proxy+}
+          method: ANY
+          cors:
+            origin: "*"
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: true
+      - http:
+          path: /admin/dashboard/stats
+          method: GET
+          cors:
+            origin: "*"
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: true
+      - http:
+          path: /admin/uploads/presign
+          method: POST
+          cors:
+            origin: "*"
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: true
+      - http:
+          path: /menu/{proxy+}
+          method: ANY
+          cors:
+            origin: "*"
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: true
+
+
+
+

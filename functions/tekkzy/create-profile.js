@@ -22,7 +22,7 @@ module.exports.main = async (event) => {
       event?.requestContext?.identity?.cognitoIdentityId;
 
     const cognitoId = ctxCognitoId || data.cognitoId;
-    const institution = 'tekkzy';
+    const institution = event?.pathParameters?.institution || data?.institution || 'tekkzy';
 
     if (!email || !cognitoId) {
       return response(400, { error: 'Both email and cognitoId are required.' });

@@ -57,7 +57,7 @@ module.exports.main = async (event) => {
       .toUpperCase();
     const bucket = String(body.bucket || DEFAULT_BUCKET).trim();
     const region = String(body.region || DEFAULT_REGION).trim();
-    const folder = body.folder || "tekkzy";
+    const folder = body.folder || event?.pathParameters?.institution || "tekkzy";
     const fileName = body.fileName;
     const fileType = body.fileType || "application/octet-stream";
 
